@@ -21,7 +21,7 @@ endif;
 <br >
 <form name="stl_add_form" method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
 <label for="stl_node_date">时间日期：</label>
-<input class="Wdate" id="stl_node_date" name="stl_node_date" type="text" onClick="WdatePicker()" value="<?php if(isset($_POST['stl_node_date'])){echo $_POST['stl_node_date'];} ?>" />
+<input class="Wdate" id="stl_node_date" name="stl_node_date" type="text" value="<?php if(isset($_POST['stl_node_date'])){echo $_POST['stl_node_date'];} ?>" /> 格式：YYYY-MM-DD
 <br >
 <br >
 <label for="stl_node_status">是否显示：</label>
@@ -37,4 +37,3 @@ endif;
 <input type="submit" name="Submit" value="添加事件" />
 </form>
 </div>
-<script language="javascript" type="text/javascript" src="<?php echo home_url('/wp-content/plugins/wp-simple-timeline/timepicker/WdatePicker.js');?>"></script>
