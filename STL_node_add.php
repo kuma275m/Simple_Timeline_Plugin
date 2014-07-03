@@ -5,7 +5,7 @@ if(isset($_POST['stl_node_date'])):
 	$node_content = $_POST['stl_node_content'];
 	$node_date = strtotime($_POST['stl_node_date']);
 	$node_status = $_POST['stl_node_status'];
-	if($wpdb->insert($wpdb->prefix.'stl_node', array( 'node_content' => $node_content, 'node_date' => $node_date, 'node_status' => $node_status)))
+	if($wpdb->query($wpdb->prepare("INSERT INTO ".$wpdb->prefix."stl_node (node_content,node_date,node_status) VALUES (%s,%d,%d)",array($node_content,$node_date,$node_status))))
 	{
 		echo '<div class="updated"><p><strong>新的时间轴事件已经被添加。</strong></p></div>';
 	}

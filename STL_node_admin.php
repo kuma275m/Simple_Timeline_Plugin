@@ -1,6 +1,6 @@
 <?php
 global $wpdb;
-$nodes = $wpdb->get_results("SELECT id, node_date, node_status, node_content FROM ".$wpdb->prefix."stl_node ORDER BY id ASC");
+$nodes = $wpdb->get_results($wpdb->prepare("SELECT id,node_date,node_status,node_content FROM ".$wpdb->prefix."stl_node ORDER BY id ASC",''));
 $i = 1;
 ?>
 <div style="width:80%;margin:50px;">

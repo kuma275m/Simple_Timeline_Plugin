@@ -2,7 +2,7 @@
 global $wpdb;
 if(isset($_POST['stl_node_id'])):
 	$_POST = stripslashes_deep($_POST);
-	$id = $_POST['stl_node_id'];
+	$id = intval($_POST['stl_node_id']);
 	$node_content = $_POST['stl_node_content'];
 	$node_date = strtotime($_POST['stl_node_date']);
 	$node_status = $_POST['stl_node_status'];
@@ -16,7 +16,8 @@ if(isset($_POST['stl_node_id'])):
 	}
 endif;
 if(isset($_GET['node_id'])):
-	$nodes = $wpdb->get_results("SELECT id, node_content, node_date, node_status FROM ".$wpdb->prefix."stl_node WHERE id = ".$_GET['node_id']." limit 1 ");
+	$node_id = intval($_GET['node_id']);
+	$nodes = $wpdb->get_results($wpdb->prepare("SELECT id, node_content, node_date, node_status FROM ".$wpdb->prefix."stl_node WHERE id = %d limit 1 ",$node_id));
 endif;
 if(!isset($_GET['node_id'])):
 	wp_safe_redirect(home_url('/wp-admin/admin.php?page=STL_admin'));

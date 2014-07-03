@@ -1,16 +1,29 @@
 === Plugin Name ===
+
 Contributors: kuma275m
+
 Donate link: http://www.weiyangx.com
+
 Tags: timeline
+
 Requires at least: 3.8.1
+
 Tested up to: 3.9.0
+
 Stable tag: 4.3
+
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License 
+URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+
 
 A simple plugin to create and show timeline.
 
+
+
 == Description ==
+
 
 A timeline plugin for wordpress. 
 This plugin is deigned and developed for real functional requirements. Firstly I tried to look for a published pulgin.
@@ -22,7 +35,10 @@ About the front-end performance, I must show my appreciation to 三生石上 since I
 To reduce tranffic request in front-end, I don't add any js and only one css file will be loaded when initinitialization.
 
 
+
+
 == Installation ==
+
 
 
 1. Upload all unziped files to the `/wp-content/plugins/` directory
@@ -36,16 +52,34 @@ To reduce tranffic request in front-end, I don't add any js and only one css fil
 2. screenshoot for create new timeline node in admin.
 3. screenshoot for performance in front-end.
 
+
+
 == Frequently Asked Questions ==
+
 
 Please submit your question and suggestion. 
 
-== Changelog ==
 
-= 1.0 =
+
+== Changelog ==
+= 0.3 =
+
+* Improveing security performance.
+
+
+= 0.1 =
+
 * The first version
+
+
 
 == Upgrade Notice ==
 
-= 1.0 =
+= 0.3 =
+
+* Improveing security performance.
+
+
+= 0.1 =
+
 * The first version, hope you will love it

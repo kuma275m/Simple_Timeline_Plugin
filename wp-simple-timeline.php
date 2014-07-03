@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Simple Timeline
-Version: 0.1
+Version: 0.3
 Plugin URI: 
 Author: Kuma Xu
 Author URI: http://www.weiyangx.com
@@ -12,7 +12,7 @@ define('STL_url', WP_PLUGIN_URL."/".dirname( plugin_basename( __FILE__ ) ) );
 define('STL_path', WP_PLUGIN_DIR."/".dirname( plugin_basename( __FILE__ ) ) );
 
 global $STL_db_version;
-$STL_db_version = "0.1";
+$STL_db_version = "0.3";
 
 function STL_install() {
 	global $wpdb;
@@ -52,7 +52,7 @@ function STL_uninstall() {
 	global $wpdb;
    
 	// Remove tables
-	$wpdb->query("DROP TABLE IF EXISTS " . $wpdb->prefix . "STL_node");
+	$wpdb->query($wpdb->prepare("DROP TABLE IF EXISTS " . $wpdb->prefix . "STL_node",''));
  	
 	// Remove option
    delete_option("STL_db_version");
@@ -102,16 +102,21 @@ add_action('admin_menu', 'STL_admin_actions');
 function STL_show_timeline() {
 	global $wpdb;
 	$output = '<ul class="timeline">';
-	$nodes = $wpdb->get_results("SELECT node_content, node_date FROM ".$wpdb->prefix."stl_node WHERE node_status = 1 ORDER BY node_date DESC");
-	$count = $wpdb->get_var("SELECT count(id) FROM ".$wpdb->prefix."stl_node WHERE node_status = 1");
-	foreach($nodes as $node){
-		$date = date('Y-m-d',$node->node_date);
-		$content = apply_filters('the_content', $node->node_content);
-		$output .= '<li><div class="time">'.$date.'</div>';
-		$output .= '<div class="version"></div>';
-		$output .= '<div class="number">'.$count.'</div>';
-		$output .= '<div class="content"><pre>'.$content.'<div class="clearfix"></div></pre></div></li>';
-		$count--;
+	$nodes = $wpdb->get_results($wpdb->prepare("SELECT node_content, node_date FROM ".$wpdb->prefix."stl_node WHERE node_status = %d ORDER BY node_date DESC",'1'));
+	$count = $wpdb->get_var($wpdb->prepare("SELECT count(id) FROM ".$wpdb->prefix."stl_node WHERE node_status = %d",'1'));
+	if($nodes){
+		foreach($nodes as $node){
+			$date = date('Y-m-d',$node->node_date);
+			$content = apply_filters('the_content', $node->node_content);
+			$output .= '<li><div class="time">'.$date.'</div>';
+			$output .= '<div class="version"></div>';
+			$output .= '<div class="number">'.$count.'</div>';
+			$output .= '<div class="content"><pre>'.$content.'<div class="clearfix"></div></pre></div></li>';
+			$count--;
+		}
+	}
+	else{
+		$output .= '<span class="alert">没有时间轴内容被找到。</span>';
 	}
 	$output .='</ul>';
 	return $output;
@@ -122,9 +127,9 @@ add_shortcode( 'stl-show-timeline', 'STL_show_timeline' );
 function stl_ajax_del_node() {
 	if(isset($_POST['data']))
 	{
-		$id = $_POST['data'];
+		$id = intval($_POST['data']);
 		global $wpdb;
-		if($wpdb->query("DELETE FROM ".$wpdb->prefix."stl_node WHERE id = ".$id))
+		if($wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."stl_node WHERE id = %d",$id)))
 		{
 			echo '1';
 		}
